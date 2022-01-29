@@ -1,0 +1,1251 @@
+############################
+#
+# Exotic Events
+#
+# Written by Annatar
+#
+############################
+
+namespace = newfrontiers_exotic_event
+
+### Mold infestation ###
+
+# Spreading mold to other planets
+event = {
+	id = newfrontiers_exotic_event.1
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		any_galaxy_planet = { 
+			OR = {
+				has_modifier = "mycelium_world" 
+				has_modifier = "harmful_mold_1"
+				has_modifier = "harmful_mold_2"
+				has_modifier = "harmful_mold_3"
+			}
+		} 
+	}
+	
+	immediate = {
+		random_list = {
+			20 = {
+				random_galaxy_planet = {
+					limit = {
+						OR = {
+							has_modifier = "mycelium_world"
+							has_modifier = "harmful_mold_1"
+							has_modifier = "harmful_mold_2"
+							has_modifier = "harmful_mold_3"
+						}
+					}
+					save_event_target_as = infected_planet
+				}
+				random_galaxy_planet = {
+					limit = { 
+						distance = {
+							source = event_target:infected_planet
+							use_bypasses = yes
+							min_jumps = 1
+							max_jumps = 5
+						}
+						NOR = {
+							has_modifier = "mycelium_world"
+							has_modifier = "harmful_mold_1"
+							has_modifier = "harmful_mold_2"
+							has_modifier = "harmful_mold_3"
+						}
+						has_owner = yes
+						owner = {
+							is_country_type = "default"
+							event_target:infected_planet = {
+								is_surveyed = { who = prev status = yes }
+							}
+							NOT = { has_origin = origin_exomycosis }
+						}
+					}
+					
+					planet_event = { id = newfrontiers_exotic_event.2 days = 30 random = 10 }
+				}
+			}
+			80 = {
+				#Null
+			}
+		}
+	}
+}
+
+
+planet_event = {
+	id = newfrontiers_exotic_event.2
+	title = "newfrontiers_exotic_event.2.name"
+	desc = {
+		trigger = {
+			owner = { NOT = { has_country_flag = mold_contact } }
+		}
+		text = "newfrontiers_exotic_event.2.desc.mold_contact"
+	}
+	desc = {
+		trigger = {
+			owner = { has_country_flag = mold_contact }
+		}
+		text = "newfrontiers_exotic_event.2.desc"
+	}
+	picture = GFX_evt_colony_settlement
+	show_sound = event_mystic_reveal
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { NOT = { has_origin = origin_exomycosis } }
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		planet_event = { id = newfrontiers_exotic_event.3 days = 360 random = 100 }
+		add_modifier = {
+			modifier = "harmful_mold_1"
+			days = -1
+		}
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+	}
+
+	option = {
+		name = DISCONCERTING
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.3
+	title = "newfrontiers_exotic_event.3.name"
+	desc = {
+		trigger = {
+			owner = { is_regular_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.3.desc"
+	}
+	desc = {
+		trigger = {
+			owner = { is_hive_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.3.desc.hive"
+	}
+	desc = {
+		trigger = {
+			owner = { is_machine_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.3.desc.machine"
+	}
+	picture = GFX_evt_disease_outbreak
+	show_sound = event_yellow_alert
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+		has_modifier = "harmful_mold_1"
+		owner = { NOT = { has_origin = origin_exomycosis } }
+	}
+	
+	immediate = {
+		planet_event = { id = newfrontiers_exotic_event.4 days = 360 random = 100 }
+		remove_modifier = "harmful_mold_1"
+		add_modifier = {
+			modifier = "harmful_mold_2"
+			days = -1
+		}
+		add_deposit = d_exofungus_contamination
+		random_owned_pop = {
+			limit = {
+				NOR = {
+					pop_has_trait = trait_molded
+					pop_has_trait = trait_infected
+					pop_has_trait = trait_corrupted
+				}
+			}
+			if = {
+				limit = { is_robot_pop = yes }
+				modify_species = {
+					species = this
+					add_trait = trait_corrupted
+				}
+			}
+			else = {
+				modify_species = {
+					species = this
+					add_trait = trait_infected
+				}
+			}
+		}
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+	}
+
+	option = {
+		name = WORRYING
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.4
+	title = "newfrontiers_exotic_event.4.name"
+	desc = {
+		trigger = {
+			owner = { is_regular_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.4.desc"
+	}
+	desc = {
+		trigger = {
+			owner = { is_hive_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.4.desc.hive"
+	}
+	desc = {
+		trigger = {
+			owner = { is_machine_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.4.desc.machine"
+	}
+	picture = GFX_evt_alien_nature
+	show_sound = event_air_raid_siren
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_3"
+		}
+		has_modifier = "harmful_mold_2"
+		owner = { NOT = { has_origin = origin_exomycosis } }
+	}
+	
+	immediate = {
+		if = {
+			limit = { is_wet = yes }
+			planet_event = { id = newfrontiers_exotic_event.5 days = 360 random = 100 }
+		}
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+		remove_modifier = "harmful_mold_2"
+		add_modifier = {
+			modifier = "harmful_mold_3"
+			days = -1
+		}
+		add_deposit = d_exofungus_contamination
+		add_deposit = d_exofungus_contamination
+		add_deposit = d_exofungus_contamination
+	}
+
+	option = {
+		name = TERRIBLE
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.5
+	title = "newfrontiers_exotic_event.5.name"
+	desc = "newfrontiers_exotic_event.5.desc"
+	picture = GFX_evt_mycelium_world
+	show_sound = event_air_raid_siren
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+		}
+		has_modifier = "harmful_mold_3"
+		owner = { NOT = { has_origin = origin_exomycosis } }
+		is_wet = yes
+	}
+	
+	immediate = {
+		remove_subclass_modifiers = yes
+		if = {
+			limit = { is_capital = yes }
+			change_pc = pc_mycelium
+		}
+		else = {
+			set_planet_entity = {
+				picture = pc_mycelium
+				entity = mycelium_planet_01_entity
+			}
+		}
+		add_modifier = {
+			modifier = "mycelium_world"
+			days = -1
+		}
+	}
+
+	option = {
+		name = TERRIBLE
+		add_deposit = d_exofungus_contamination
+		add_deposit = d_exofungus_contamination
+	}
+}
+
+# Spread of infection
+
+event = {
+	id = newfrontiers_exotic_event.6
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		any_galaxy_species = {
+			any_species_pop = {
+				OR = { 
+					pop_has_trait = trait_infected
+					pop_has_trait = trait_corrupted
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		random_galaxy_planet = {
+			limit = {
+				any_owned_pop = {
+					OR = { 
+						pop_has_trait = trait_infected
+						pop_has_trait = trait_corrupted
+					}
+				}
+			}
+			weights = {
+				base = 25
+				modifier = { 
+					factor = 2
+					NOR = {
+						has_modifier = planetary_quarantine
+						has_modifier = planetary_quarantine_gestalt
+					}
+				}
+			}
+			random_list = {
+				40 = {
+					while = {
+						count = 1
+						random_owned_pop = {
+							limit = {
+								NOR = {
+									pop_has_trait = trait_molded
+									pop_has_trait = trait_infected
+									pop_has_trait = trait_corrupted
+								}
+							}
+							if = {
+								limit = { is_robot_pop = no }
+								modify_species = {
+									species = this
+									add_trait = trait_infected
+								}
+							}
+							else = {
+								modify_species = {
+									species = this
+									add_trait = trait_corrupted
+								}
+							}
+						}
+					}
+				}
+				25 = {
+					while = {
+						count = 2
+						random_owned_pop = {
+							limit = {
+								NOR = {
+									pop_has_trait = trait_molded
+									pop_has_trait = trait_infected
+									pop_has_trait = trait_corrupted
+								}
+							}
+							if = {
+								limit = { is_robot_pop = no }
+								modify_species = {
+									species = this
+									add_trait = trait_infected
+								}
+							}
+							else = {
+								modify_species = {
+									species = this
+									add_trait = trait_corrupted
+								}
+							}
+						}
+					}
+				}
+				15 = {
+					while = {
+						count = 3
+						random_owned_pop = {
+							limit = {
+								NOR = {
+									pop_has_trait = trait_molded
+									pop_has_trait = trait_infected
+									pop_has_trait = trait_corrupted
+								}
+							}
+							if = {
+								limit = { is_robot_pop = no }
+								modify_species = {
+									species = this
+									add_trait = trait_infected
+								}
+							}
+							else = {
+								modify_species = {
+									species = this
+									add_trait = trait_corrupted
+								}
+							}
+						}
+					}
+				}
+				20 = {
+					modifier = {
+						factor = 2
+						has_modifier = protective_equipment
+					}
+					#Null
+				}
+			}
+			if = {
+				limit = {
+					owner = { NOT = { has_origin = origin_exomycosis } }
+					NOR = {
+						has_modifier = "harmful_mold_1"
+						has_modifier = "harmful_mold_2"
+						has_modifier = "harmful_mold_3" 
+					}
+				}
+				planet_event = { id = newfrontiers_exotic_event.7 days = 30 random = 10 }
+			}
+		}
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.7
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { NOT = { has_origin = origin_exomycosis } }
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		add_modifier = {
+			modifier = "harmful_mold_1"
+			days = -1
+		}
+		planet_event = { id = newfrontiers_exotic_event.3 days = 360 random = 100 }
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+	}
+}
+
+# Surge of infection
+
+event = {
+	id = newfrontiers_exotic_event.8
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		any_galaxy_planet = {
+			OR = {
+				has_modifier = "harmful_mold_1"
+				has_modifier = "harmful_mold_2"
+				has_modifier = "harmful_mold_3"
+			}
+		}
+	}
+	
+	immediate = {
+		every_galaxy_planet = {
+			limit = {
+				has_owner = yes
+				OR = {
+					has_modifier = "harmful_mold_1"
+					has_modifier = "harmful_mold_2"
+					has_modifier = "harmful_mold_3"
+				}
+			}
+			
+			if = {
+				limit = {
+					count_owned_pop = {
+						limit = { 
+							OR = {
+								pop_has_trait = trait_infected
+								pop_has_trait = trait_corrupted
+							}
+						}
+						count > 20
+					}
+				}
+				random_list = {
+					50 = {
+						modifier = {
+							factor = 2
+							count_owned_pop = {
+								limit = { 
+									OR = {
+										pop_has_trait = trait_infected
+										pop_has_trait = trait_corrupted
+									}
+								}
+								count > 40
+							}
+						}
+						planet_event = { id = newfrontiers_exotic_event.9 days = 90 random = 30 }
+					}
+					50 = {
+						planet_event = { id = newfrontiers_exotic_event.10 days = 90 random = 30 }
+					}
+				}
+			}
+			else = {
+				planet_event = { id = newfrontiers_exotic_event.10 days = 90 random = 30 }
+			}
+		}
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.9
+	title = "newfrontiers_exotic_event.9.name"
+	desc = {
+		trigger = {
+			owner = { is_regular_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.9.desc"
+	}
+	desc = {
+		trigger = {
+			owner = { is_hive_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.9.desc.hive"
+	}
+	desc = {
+		trigger = {
+			owner = { is_machine_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.9.desc.machine"
+	}
+	picture = GFX_evt_ground_combat
+	show_sound = event_ground_battle
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		while = {
+			count = 3
+			random_owned_pop = {
+				limit = {
+					NOR = {
+						pop_has_trait = trait_molded
+						pop_has_trait = trait_infected
+						pop_has_trait = trait_corrupted
+					}
+				}
+				if = {
+					limit = { is_robot_pop = no }
+					modify_species = {
+						species = this
+						add_trait = trait_infected
+					}
+				}
+				else = {
+					modify_species = {
+						species = this
+						add_trait = trait_corrupted
+					}
+				}
+			}
+		}
+		
+		create_country = {
+			name = "NAME_Mutated_Infected"
+			type = faction
+			effect = {
+				establish_communications_no_message = root.owner
+				set_country_flag = mutated_infected
+			}
+		}
+		random_list = {
+			60 = {
+				while = {
+					count = 2
+					random_owned_pop = {
+						limit = { 
+							OR = {
+								pop_has_trait = trait_infected
+								pop_has_trait = trait_corrupted
+							}
+						}
+						kill_pop = yes
+					}
+				}
+				while = {
+					count = 5
+					create_army = {
+						name = "NAME_Mutated_Infected"
+						owner = last_created_country
+						type = "infected_army"
+					}
+				}
+			}
+			30 = {
+				modifier = {
+					factor = 2
+					count_owned_pop = {
+						limit = { 
+							OR = {
+								pop_has_trait = trait_infected
+								pop_has_trait = trait_corrupted
+							}
+						}
+						count > 40
+					}
+				}
+				while = {
+					count = 4
+					random_owned_pop = {
+						limit = { 
+							OR = {
+								pop_has_trait = trait_infected
+								pop_has_trait = trait_corrupted
+							}
+						}
+						kill_pop = yes
+					}
+				}
+				while = {
+					count = 10
+					create_army = {
+						name = "NAME_Mutated_Infected"
+						owner = last_created_country
+						type = "infected_army"
+					}
+				}
+			}
+			10 = {
+				while = {
+					count = 8
+					random_owned_pop = {
+						limit = { 
+							OR = {
+								pop_has_trait = trait_infected
+								pop_has_trait = trait_corrupted
+							}
+						}
+						kill_pop = yes
+					}
+				}
+				while = {
+					count = 20
+					create_army = {
+						name = "NAME_Mutated_Infected"
+						owner = last_created_country
+						type = "infected_army"
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = TERRIBLE
+		custom_tooltip = mutated_infected_attack
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.10
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		while = {
+			count = 3
+			random_owned_pop = {
+				limit = {
+					NOR = {
+						pop_has_trait = trait_molded
+						pop_has_trait = trait_infected
+						pop_has_trait = trait_corrupted
+					}
+				}
+				if = {
+					limit = { is_robot_pop = no }
+					modify_species = {
+						species = this
+						add_trait = trait_infected
+					}
+				}
+				else = {
+					modify_species = {
+						species = this
+						add_trait = trait_corrupted
+					}
+				}
+			}
+		}
+	}
+}
+
+# The Infected Mutants have won
+planet_event = {
+	id = newfrontiers_exotic_event.11
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		fromfrom = { has_country_flag = mutated_infected }
+	}
+
+	immediate = {
+		mold_assimilation = yes
+		set_owner = event_target:mold_country
+		set_controller = event_target:mold_country
+			
+		random_planet_army = {
+			limit = { army_type = infected_army }
+			set_owner = event_target:mold_country
+		}
+		every_owned_pop = {
+			if = {
+				limit = {
+					OR = {
+						pop_has_trait = trait_infected
+						pop_has_trait = trait_corrupted
+					}
+				}
+				kill_pop = yes
+				prev = {
+					create_pop = {
+						species = event_target:mold_country.species
+					}
+				}
+			}
+			else = {
+				kill_pop = yes
+				event_target:mold_country = { 
+					add_resource = {
+						food = 20
+					}
+				}
+			}
+		}
+		# flip starbase
+		solar_system = {
+			if = {
+				limit = { exists = starbase }
+				starbase = { set_owner = event_target:mold_country }
+			}
+		}
+		event_target:mold_country = { country_event = { id = newfrontiers_exotic_event.23 days = 1 } }
+	}
+}
+
+# Consequences of an molded army attack
+planet_event = {
+	id = newfrontiers_exotic_event.12
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		from = { has_origin = origin_exomycosis }
+		NOR = {
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		planet_event = { id = newfrontiers_exotic_event.13 days = 30 random = 10 }
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.13
+	title = "newfrontiers_exotic_event.13.name"
+	desc = "newfrontiers_exotic_event.13.desc"
+	picture = GFX_evt_colony_settlement
+	show_sound = event_mystic_reveal
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { NOT = { has_origin = origin_exomycosis } }
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		planet_event = { id = newfrontiers_exotic_event.3 days = 360 random = 100 }
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+		add_modifier = {
+			modifier = "harmful_mold_1"
+			days = -1
+		}
+	}
+
+	option = {
+		name = DISCONCERTING
+	}
+}
+
+### Mycelium world colonized
+planet_event = {
+	id = newfrontiers_exotic_event.14
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_modifier = "mycelium_world"
+		NOT = { has_modifier = "harmful_mold_3" }
+		owner = { NOT = { has_origin = origin_exomycosis } }
+	}
+	
+	immediate = {
+		#Harmful Mold
+		if = {
+			limit = { owner = { NOT = { has_country_flag = mold_contact } } }
+			planet_event = { id = newfrontiers_exotic_event.15 days = 30 random = 10 }
+		}
+		else = {
+			if = {
+				limit = { NOT = { has_modifier = harmful_mold_3 } }
+				add_modifier = {
+					modifier = "harmful_mold_3"
+					days = -1
+				}
+			}
+			random_owned_pop = {
+				limit = {
+					NOR = {
+						pop_has_trait = trait_molded
+						pop_has_trait = trait_infected
+						pop_has_trait = trait_corrupted
+					}
+				}
+				if = {
+					limit = { is_robot_pop = yes }
+					modify_species = {
+						species = this
+						add_trait = trait_corrupted
+					}
+				}
+				else = {
+					modify_species = {
+						species = this
+						add_trait = trait_infected
+					}
+				}
+			}
+		
+		}
+		
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.15
+	title = "newfrontiers_exotic_event.15.name"
+	desc = {
+		trigger = {
+			owner = { is_regular_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.15.desc"
+	}
+	desc = {
+		trigger = {
+			owner = { is_hive_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.15.desc.hive"
+	}
+	desc = {
+		trigger = {
+			owner = { is_machine_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.15.desc.machine"
+	}
+	picture = GFX_evt_mycelium_world
+	show_sound = event_yellow_alert
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOR = {
+			has_modifier = "mycelium_world" 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+		owner = { NOT = { has_origin = origin_exomycosis } }
+	}
+	
+	immediate = {
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+		add_modifier = {
+			modifier = "harmful_mold_3"
+			days = -1
+		}
+		random_owned_pop = {
+			limit = {
+				NOR = {
+					pop_has_trait = trait_molded
+					pop_has_trait = trait_infected
+					pop_has_trait = trait_corrupted
+				}
+			}
+			if = {
+				limit = { is_robot_pop = yes }
+				modify_species = {
+					species = this
+					add_trait = trait_corrupted
+				}
+			}
+			else = {
+				modify_species = {
+					species = this
+					add_trait = trait_infected
+				}
+			}
+		}
+	}
+
+	option = {
+		name = UNFORTUNATE
+	}
+}
+
+# Mold colonized the planet
+
+planet_event = {
+	id = newfrontiers_exotic_event.16
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { has_origin = origin_exomycosis }
+		OR = {
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		if = {
+			limit = { has_modifier = "harmful_mold_1" }
+			remove_modifier = "harmful_mold_1"
+		}
+		if = {
+			limit = { has_modifier = "harmful_mold_2" }
+			remove_modifier = "harmful_mold_2"
+		}
+		if = {
+			limit = { has_modifier = "harmful_mold_3" }
+			remove_modifier = "harmful_mold_3"
+		}
+	}
+}
+
+# Mold has taken over the planet
+
+planet_event = {
+	id = newfrontiers_exotic_event.17
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { has_origin = origin_exomycosis }
+		OR = { 
+			has_modifier = "harmful_mold_1"
+			has_modifier = "harmful_mold_2"
+			has_modifier = "harmful_mold_3"
+		}
+	}
+	
+	immediate = {
+		if = {
+			limit = { has_modifier = "harmful_mold_1" }
+			remove_modifier = "harmful_mold_1"
+		}
+		if = {
+			limit = { has_modifier = "harmful_mold_2" }
+			remove_modifier = "harmful_mold_2"
+		}
+		if = {
+			limit = { has_modifier = "harmful_mold_3" }
+			remove_modifier = "harmful_mold_3"
+		}
+	}
+}
+
+### Mycelium world gained
+planet_event = {
+	id = newfrontiers_exotic_event.18
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_modifier = "mycelium_world"
+		NOT = { has_modifier = "harmful_mold_3" }
+		owner = { NOT = { has_origin = origin_exomycosis } }
+	}
+	
+	immediate = {
+		#Harmful Mold
+		planet_event = { id = newfrontiers_exotic_event.15 days = 30 random = 10 }
+		
+	}
+}
+
+### Mold world gained
+planet_event = {
+	id = newfrontiers_exotic_event.19
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		owner = { NOT = { has_origin = origin_exomycosis } }
+		has_deposit = d_exofungus_contamination 
+	}
+	
+	immediate = {
+		#Harmful Mold
+		if = {
+			limit = { is_wet = yes }
+			planet_event = { id = newfrontiers_exotic_event.20 days = 30 random = 10 }
+		}
+		else = {
+			planet_event = { id = newfrontiers_exotic_event.21 days = 30 random = 10 }
+		}
+	}
+}
+
+
+planet_event = {
+	id = newfrontiers_exotic_event.20
+	title = "newfrontiers_exotic_event.20.name"
+	desc = {
+		trigger = {
+			owner = { is_regular_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.20.desc"
+	}
+	desc = {
+		trigger = {
+			owner = { is_hive_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.20.desc.hive"
+	}
+	desc = {
+		trigger = {
+			owner = { is_machine_empire = yes }
+		}
+		text = "newfrontiers_exotic_event.20.desc.machine"
+	}
+	picture = GFX_evt_alien_nature
+	show_sound = event_air_raid_siren
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+	}
+
+	option = {
+		name = UNFORTUNATE
+		add_modifier = {
+			modifier = "harmful_mold_3"
+			days = -1
+		}
+		random_owned_pop = {
+			limit = {
+				NOR = {
+					pop_has_trait = trait_molded
+					pop_has_trait = trait_infected
+					pop_has_trait = trait_corrupted
+				}
+			}
+			if = {
+				limit = { is_robot_pop = yes }
+				modify_species = {
+					species = this
+					add_trait = trait_corrupted
+				}
+			}
+			else = {
+				modify_species = {
+					species = this
+					add_trait = trait_infected
+				}
+			}
+		}
+		add_deposit = d_exofungus_contamination
+		add_deposit = d_exofungus_contamination
+		add_deposit = d_exofungus_contamination
+	}
+}
+
+planet_event = {
+	id = newfrontiers_exotic_event.21
+	title = "newfrontiers_exotic_event.21.name"
+	desc ="newfrontiers_exotic_event.21.desc"
+	picture = GFX_evt_colony_settlement
+	show_sound = event_mystic_reveal
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		owner = {
+			if = {
+				limit = { NOT = { has_country_flag = mold_contact } }
+				set_country_flag = mold_contact 
+			}
+		}
+	}
+
+	option = {
+		name = DISCONCERTING
+		add_modifier = {
+			modifier = "harmful_mold_1"
+			days = -1
+		}
+		add_deposit = d_exofungus_contamination
+	}
+}
+
+country_event = {
+	id = newfrontiers_exotic_event.22
+	title = "newfrontiers_exotic_event.22.name"
+	desc ="newfrontiers_exotic_event.22.desc"
+	picture = GFX_evt_disease_outbreak
+	show_sound = event_mystic_reveal
+	location = ROOT
+	
+	is_triggered_only = yes
+
+	trigger = {
+		last_increased_tech = "tech_megamycete"
+	}
+
+	option = {
+		name = OK
+	}
+}
+
+country_event = {
+	id = newfrontiers_exotic_event.23
+	title = "newfrontiers_exotic_event.23.name"
+	desc ="newfrontiers_exotic_event.23.desc"
+	picture = GFX_evt_disease_outbreak
+	show_sound = event_mystic_reveal
+	location = FROM
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_exomycosis
+	}
+
+	option = {
+		name = OK
+	}
+}
