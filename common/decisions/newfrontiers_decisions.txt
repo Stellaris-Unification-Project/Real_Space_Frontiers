@@ -1441,8 +1441,10 @@ decision_cave_network_expansion = {
 	
 	potential = {
 		is_planet_class = pc_hollow
-		NOT = { has_modifier = subglacial_world }
-		NOT = { has_modifier = hollow_world_exp_3 }
+		NOR = {
+			has_modifier = subglacial_world
+			has_modifier = hollow_world_exp_3
+		}
 	}
 	
 	effect = {

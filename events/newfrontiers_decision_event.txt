@@ -197,7 +197,7 @@ fleet_event = {
 			AND = {
 				exists = event_target:dying_empire 
 				NOT = { exists = event_target:ark_empire }
-				owner = { is_same_value = event_target:dying_empire }
+				is_owned_by = event_target:dying_empire
 			}
 		}
 		custom_tooltip = newfrontiers_decision_event.3.c.tooltip
@@ -218,7 +218,7 @@ fleet_event = {
 			AND = {
 				exists = event_target:dying_empire
 				NOT = { exists = event_target:ark_empire }
-				owner = { is_same_value = event_target:dying_empire }
+				is_owned_by = event_target:dying_empire
 			}
 		}
 		custom_tooltip = newfrontiers_decision_event.3.d.tooltip
@@ -285,11 +285,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = xenophile_on_ark
 						has_fleet_flag = xenophobe_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_xenophile"
-								has_ethic = "ethic_fanatic_xenophile"
-							}
+						owner = {
+							is_xenophile = yes
 						}
 					}
 				}
@@ -301,11 +298,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = xenophile_on_ark
 						has_fleet_flag = xenophobe_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_xenophobe"
-								has_ethic = "ethic_fanatic_xenophobe"
-							}
+						owner = {
+							is_xenophobe = yes
 						}
 					}
 				}
@@ -317,11 +311,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = pacifist_on_ark
 						has_fleet_flag = militarist_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_pacifist"
-								has_ethic = "ethic_fanatic_pacifist"
-							}
+						owner = {
+							is_pacifist = yes
 						}
 					}
 				}
@@ -333,11 +324,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = pacifist_on_ark
 						has_fleet_flag = militarist_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_militarist"
-								has_ethic = "ethic_fanatic_militarist"
-							}
+						owner = {
+							is_militarist = yes
 						}
 					}
 				}
@@ -349,11 +337,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = egalitarian_on_ark
 						has_fleet_flag = authoritarian_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_authoritarian"
-								has_ethic = "ethic_fanatic_authoritarian"
-							}
+						owner = {
+							is_authoritarian = yes
 						}
 					}
 				}
@@ -365,11 +350,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = egalitarian_on_ark
 						has_fleet_flag = authoritarian_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_egalitarian"
-								has_ethic = "ethic_fanatic_egalitarian"
-							}
+						owner = {
+							is_egalitarian = yes
 						}
 					}
 				}
@@ -381,11 +363,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = spiritualist_on_ark
 						has_fleet_flag = materialist_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_materialist"
-								has_ethic = "ethic_fanatic_materialist"
-							}
+						owner = {
+							is_materialist = yes
 						}
 					}
 				}
@@ -397,11 +376,8 @@ fleet_event = {
 					OR = {
 						has_fleet_flag = spiritualist_on_ark
 						has_fleet_flag = materialist_on_ark
-						owner = { 
-							OR = {
-								has_ethic = "ethic_spiritualist"
-								has_ethic = "ethic_fanatic_spiritualist"
-							}
+						owner = {
+							is_spiritualist = yes
 						}
 					}
 				}
@@ -414,7 +390,7 @@ fleet_event = {
 						has_fleet_flag = technology_lost
 						AND = {
 							exists = event_target:ark_empire
-							owner = { is_same_value = event_target:ark_empire }
+							is_owned_by = event_target:ark_empire
 						}
 					}
 				}
@@ -464,7 +440,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = { change_government = random }
@@ -500,7 +476,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -541,7 +517,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -582,7 +558,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -623,7 +599,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -664,7 +640,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -705,7 +681,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -746,7 +722,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {
@@ -787,7 +763,7 @@ fleet_event = {
 			limit = {
 				AND = {
 					exists = event_target:ark_empire
-					owner = { is_same_value = event_target:ark_empire }
+					is_owned_by = event_target:ark_empire
 				}
 			}
 			owner = {

@@ -179,12 +179,10 @@ planet_heating_effect = {
 		}
 		else = {
 			limit = { 
-				NOT = {
-					OR = {
+				NOR = {
 						has_modifier = "dust_world"
 						has_modifier = "mesa_world"
-					}
-				} 
+} 
 			}
 			remove_subclass_modifiers = yes
 			random_list = {
@@ -1994,7 +1992,7 @@ founding_ark_world = {
 		limit = {
 			AND = {
 				exists = event_target:dying_empiree
-				owner = { is_same_value = event_target:dying_empire }
+				is_owned_by = event_target:dying_empire
 			}
 		} 
 		# create Ark country
@@ -3570,8 +3568,7 @@ give_random_technology_hidden = {
 			modifier = {
 				factor = 0
 				OR = {
-					has_ethic = ethic_spiritualist
-					has_ethic = ethic_fanatic_spiritualist
+					is_spiritualist = yes
 					has_valid_civic = civic_machine_servitor
 					has_technology = "tech_heritage_site"
 				}

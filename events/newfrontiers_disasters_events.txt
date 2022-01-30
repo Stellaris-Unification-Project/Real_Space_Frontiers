@@ -79,7 +79,7 @@ event = {
 									modifier = {
 										factor = 0
 										OR = {
-											NOT = { has_moon = yes }
+											has_moon = no
 											is_ringworld = yes
 											is_planet_class = pc_habitat
 										}
@@ -1666,8 +1666,10 @@ planet_event = {
 	desc = {
 		trigger = {
 			owner = {
-				NOT = { has_country_flag = bastion_project }
-				NOT = { has_country_flag = ark_project } 
+				NOR = {
+					has_country_flag = bastion_project
+					has_country_flag = ark_project
+				} 
 			}
 			NOT = { has_planet_flag = has_shelter_project_cold }
 		}
@@ -2112,8 +2114,10 @@ planet_event = {
 	desc = {
 		trigger = {
 			owner = {
-				NOT = { has_country_flag = bastion_project }
-				NOT = { has_country_flag = ark_project } 
+				NOR = {
+					has_country_flag = bastion_project
+					has_country_flag = ark_project
+				} 
 			}
 			NOT = { has_planet_flag = has_shelter_project_cold }
 		}
@@ -5199,7 +5203,7 @@ country_event = {
 				}
 				any_system_within_border = {
 					any_bordering_country = { 
-						is_same_value = event_target:disaster_planet.owner 
+						is_same_empire = event_target:disaster_planet.owner 
 						NOT = { is_subject_type = vassal }
 					}
 				}
@@ -5223,7 +5227,7 @@ country_event = {
 			}
 			any_system_within_border = {
 				any_bordering_country = { 
-					is_same_value = event_target:disaster_planet.owner 
+					is_same_empire = event_target:disaster_planet.owner 
 					NOT = { is_subject_type = vassal }
 				}
 			}

@@ -803,7 +803,7 @@ pm_long_night = {
 		modifier = {
 			factor = 0.5
 			AND = {
-				NOT = { has_moon = yes }
+				has_moon = no
 				is_moon = no
 			}
 		}

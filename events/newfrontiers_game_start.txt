@@ -16,7 +16,7 @@ event = {
 	
 	immediate = {
 		# Start Subclass Menu
-		every_country = {
+		every_playable_country = {
 			limit = { is_ai = no }
 			country_event = { id = newfrontiers.8 }
 		}
@@ -1402,7 +1402,7 @@ event = {
 		random_galaxy_planet = {
 			limit = {
 				is_planet_class = pc_barren
-				NOT = { is_planet_subclass = yes }
+				is_planet_subclass = no
 				solar_system = { NOT = { has_star_flag = empire_cluster } }
 			}
 			set_planet_flag = hollow_world
@@ -1430,7 +1430,7 @@ event = {
 					random_galaxy_planet = {
 						limit = {
 							is_planet_class = pc_barren
-							NOT = { is_planet_subclass = yes }
+							is_planet_subclass = no
 							solar_system = { NOT = { has_star_flag = empire_cluster } }
 						}
 						set_planet_flag = hollow_world
@@ -1446,7 +1446,7 @@ event = {
 		random_galaxy_planet = {
 			limit = {
 				is_planet_class = pc_molten
-				NOT = { is_planet_subclass = yes }
+				is_planet_subclass = no
 				solar_system = { NOT = { has_star_flag = empire_cluster } }
 			}
 			set_planet_flag = infernal_world
@@ -1474,7 +1474,7 @@ event = {
 					random_galaxy_planet = {
 						limit = {
 							is_planet_class = pc_molten
-							NOT = { is_planet_subclass = yes }
+							is_planet_subclass = no
 							solar_system = { NOT = { has_star_flag = empire_cluster } }
 						}
 						set_planet_flag = infernal_world
@@ -1490,7 +1490,7 @@ event = {
 		random_galaxy_planet = {
 			limit = {
 				is_planet_class = pc_frozen
-				NOT = { is_planet_subclass = yes }
+				is_planet_subclass = no
 				solar_system = { NOT = { has_star_flag = empire_cluster } }
 			}
 			set_planet_flag = subglacial_world
@@ -1518,7 +1518,7 @@ event = {
 					random_galaxy_planet = {
 						limit = {
 							is_planet_class = pc_frozen
-							NOT = { is_planet_subclass = yes }
+							is_planet_subclass = no
 							solar_system = { NOT = { has_star_flag = empire_cluster } }
 						}
 						set_planet_flag = subglacial_world
@@ -4458,7 +4458,7 @@ event = {
 	is_triggered_only = yes
 	
 	immediate = {
-		every_country = {	
+		every_playable_country = {	
 			limit = { is_ai = no }
 			country_event = { id = newfrontiers.62 days = 1 }
 		}

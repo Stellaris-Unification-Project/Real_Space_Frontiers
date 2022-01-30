@@ -407,47 +407,47 @@ planet_event = {
 			}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 		create_army = {
 			name = "NAME_Terrible_Creatures"
-			owner = last_created
+			owner = last_created_country
 			type = "night_monsters"
 		}
 	}

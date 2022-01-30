@@ -156,8 +156,7 @@ planetary_catastrophe_is_possible = {
 		is_planet_class = pc_hive
 		is_planet_class = pc_city
 		is_planet_class = pc_relic
-		is_planet_class = pc_ringworld_habitable
-		is_planet_class = pc_habitat
+		is_artificial = yes
 		is_planet_class = pc_sterile
 	}
 	NOR = {
